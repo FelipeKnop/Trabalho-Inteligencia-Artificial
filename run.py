@@ -1,9 +1,11 @@
 from argparse import ArgumentParser
 from time import time
 
+import numpy as np
+
 from a_estrela import BuscaAEstrela
 from backtracking import Backtracking
-from grafo import Grafo
+from grafo import Grafo, Cidade
 from gulosa import BuscaGulosa
 from ida_estrela import BuscaIDAEstrela
 from largura import BuscaLargura
@@ -27,7 +29,43 @@ def cria_grafo() -> Grafo:
 
     :return: instância da classe Grafo
     """
-    raise NotImplementedError
+
+    # Lê o arquivo com as informações do grafo
+    with open('dist8.txt', 'r') as f:
+        linhas = f.readlines()
+
+    # Primeira linha do arquivo indica a quantidade de cidades
+    quantidade = int(linhas[0])
+
+    # Cria a lista de cidades
+    cidades = [Cidade(i) for i in range(quantidade)]
+
+    # Obtém as matriz de distância entre as cidades
+    distancias = np.array(
+        [
+            linhas[i].strip('\n').split(' ')  # strip remove o \n no final da linha e split separa os número por espaços
+            for i in range(1, quantidade + 1)
+        ]
+    ).astype(float)  # Transforma os números de string pra int
+
+    # Preenche a lista de vizinhos de cada cidade a partir da matriz de distâncias
+    for i in range(quantidade):
+        for j in range(quantidade):
+            if distancias[i, j] > 0:
+                cidades[i].vizinhos.append(cidades[j])
+
+    # Obtém as matriz de heurísticas
+    heuristicas = np.array(
+        [
+            linhas[i].strip('\n').split(' ')  # strip remove o \n no final da linha e split separa os número por espaços
+            for i in range(quantidade + 2, len(linhas))
+        ]
+    ).astype(float)  # Transforma os números de string pra int
+
+    # Cria instância da classe Grafo com as informações lidas do arquivo
+    grafo = Grafo(cidades, distancias, heuristicas)
+
+    return grafo
 
 
 def executa(algoritmos: list) -> None:
