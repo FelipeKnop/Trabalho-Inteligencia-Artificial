@@ -1,3 +1,4 @@
+import sys
 from argparse import ArgumentParser
 from time import time
 
@@ -23,10 +24,12 @@ ALGORITMOS = {
 }
 
 
-def cria_grafo() -> Grafo:
+def cria_grafo(inicio: int, fim: int) -> Grafo:
     """
     Lê os dados do grafo do arquivo .txt e retorna a instância do Grafo.
 
+    :param inicio: id do nó inicial do grafo
+    :param fim: id do nó objetivo do grafo
     :return: instância da classe Grafo
     """
 
@@ -65,17 +68,30 @@ def cria_grafo() -> Grafo:
     # Cria instância da classe Grafo com as informações lidas do arquivo
     grafo = Grafo(cidades, distancias, heuristicas)
 
+    if inicio < 0 or inicio >= quantidade:
+        print('Valor inválido para o id do nó inicial.', file=sys.stderr)
+        exit(0)
+
+    if fim < 0 or fim >= quantidade:
+        print('Valor inválido para o id do nó final.', file=sys.stderr)
+        exit(0)
+
+    grafo.id_inicio = inicio
+    grafo.id_fim = fim
+
     return grafo
 
 
-def executa(algoritmos: list) -> None:
+def executa(inicio: int, fim: int, algoritmos: list) -> None:
     """
     Executa os algoritmos selecionados para solução do problema.
 
+    :param inicio: id do nó inicial do grafo
+    :param fim: id do nó objetivo do grafo
     :param algoritmos: lista de algoritmos
     """
 
-    grafo = cria_grafo()
+    grafo = cria_grafo(inicio, fim)
 
     for alg in algoritmos:
         # Obtém e instancia a classe apropriada para o algoritmo selecionado
@@ -90,15 +106,19 @@ def executa(algoritmos: list) -> None:
         end_time = time()  # Finaliza o contador de tempo
 
         print(f'Algoritmo de {algoritmo.nome} concluído.\n')
-        print('\nSolução:\n')
-        print(f'Caminho: {" -> ".join(algoritmo.caminho)}\n')
-        print(f'Profundidade: {algoritmo.profundidade}\n')
-        print(f'Custo: {algoritmo.custo_solucao}\n')
 
-        print(f'\nNúmero total de nós expandidos: {algoritmo.num_nos_expandidos}\n')
-        print(f'Número total de nós visitados: {algoritmo.num_nos_visitados}\n')
+        if algoritmo.caminho is None:
+            print('\nSolução não encontrada\n')
+        else:
+            print('\nSolução:\n')
+            print(f'Caminho: {" -> ".join(algoritmo.caminho)}\n')
+            print(f'Profundidade: {algoritmo.profundidade}\n')
+            print(f'Custo: {algoritmo.custo_solucao}\n')
 
-        print(f'\nValor médio do fator de ramificação: {algoritmo.fator_ramificacao}\n')
+            print(f'\nNúmero total de nós expandidos: {algoritmo.num_nos_expandidos}\n')
+            print(f'Número total de nós visitados: {algoritmo.num_nos_visitados}\n')
+
+            print(f'\nValor médio do fator de ramificação: {algoritmo.fator_ramificacao}\n')
 
         print(f'\nTempo total de execução: {end_time - start_time:.2f} segundos.\n')
         print('--------------------------------------------')
@@ -108,6 +128,14 @@ def main() -> None:
     # Obtém os parâmetros da linha de comando
     parser = make_parser()
     args = parser.parse_args()
+
+    try:
+        # Obtém nós de início e fim do grafo
+        inicio = int(args.inicial)
+        fim = int(args.final)
+    except ValueError:
+        print('Valores de id para os nós inicial e final devem ser números inteiros.')
+        return
 
     # Obtém lista de algoritmos selecionados
     algoritmos = args.algoritmos
@@ -127,7 +155,7 @@ def main() -> None:
 
     print(f'Algoritmos escolhidos: {algoritmos}')
 
-    executa(algoritmos)
+    executa(inicio, fim, algoritmos)
 
 
 def make_parser() -> ArgumentParser:
@@ -140,6 +168,18 @@ def make_parser() -> ArgumentParser:
     parser = ArgumentParser(
         description='Trabalho prático da disciplina DCC014 - Inteligência Artificial, implementado pelos alunos Davi '
                     'de Almeida Cardoso e Felipe Barra Knop, para resolução do problema 5 - Mapa (Grafo de Cidades).'
+    )
+
+    parser.add_argument(
+        'inicial',
+        action='store',
+        help='id do nó inicial do grafo. Deve ser um número inteiro entre 0 e a quantidade de nós no grafo.'
+    )
+
+    parser.add_argument(
+        'final',
+        action='store',
+        help='id do nó objetivo do grafo. Deve ser um número inteiro entre 0 e a quantidade de nós no grafo.'
     )
 
     parser.add_argument(
