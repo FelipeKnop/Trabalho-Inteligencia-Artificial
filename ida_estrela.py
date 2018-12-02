@@ -18,10 +18,8 @@ class BuscaIDAEstrela(Algoritmo):
         no = raiz
 
         fechados = [False] * len(self.grafo.cidades)
-        descartados = [None] * len(self.grafo.cidades)
+        descartados = list()
         patamar = self.grafo.heuristicas[self.grafo.id_inicio][self.grafo.id_fim]
-
-        descarte = 0
 
         while True:
             if len(no.cidade.vizinhos) > no.cont_filho:
@@ -30,21 +28,20 @@ class BuscaIDAEstrela(Algoritmo):
                 else:
                     filho = self.gera_filho(no)
                     if filho.valor + self.grafo.heuristicas[filho.cidade.id][self.grafo.id_fim] > patamar + 0.00001:
-                        descartados[descarte] = filho
-                        descarte += 1
+                        descartados.append(filho)
                     elif filho.cidade.id == self.grafo.id_fim:
                         self.gera_solucao(filho)
                         return
                     else:
                         no = filho
             elif no == raiz:
-                if descarte == 0:
+                if len(descartados) == 0:
                     self.gera_solucao()
                     return
 
                 menor = descartados[0]
 
-                for i in range(1, descarte):
+                for i in range(1, len(descartados)):
                     if self.grafo.heuristicas[descartados[i].cidade.id][self.grafo.id_fim] + descartados[i].valor < \
                             self.grafo.heuristicas[menor.cidade.id][self.grafo.id_fim] + menor.valor:
                         menor = descartados[i]
@@ -54,8 +51,8 @@ class BuscaIDAEstrela(Algoritmo):
                     return
 
                 fechados = [False] * len(self.grafo.cidades)
+                descartados = list()
                 patamar = self.grafo.heuristicas[menor.cidade.id][self.grafo.id_fim] + menor.valor
-                descarte = 0
                 raiz.cont_filho = 0
             else:
                 fechados[no.cidade.id] = True
