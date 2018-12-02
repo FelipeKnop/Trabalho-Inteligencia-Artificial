@@ -9,5 +9,5 @@ Repositório para a implementação do trabalho final da disciplina DCC014 - Int
 - [ ] Busca em Profundidade (Limitada)
 - [x] Busca Ordenada
 - [x] Busca Gulosa
-- [ ] Busca A*
+- [x] Busca A*
 - [ ] Busca IDA*
