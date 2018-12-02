@@ -18,9 +18,7 @@ class Backtracking(Algoritmo):
         no = raiz
 
         while True:
-            try:
-                _ = no.cidade.vizinhos[no.cont_filho]
-
+            if len(no.cidade.vizinhos) > no.cont_filho:
                 if self.confere_ancestral(no, no.cidade.vizinhos[no.cont_filho].id):
                     no.cont_filho += 1
                 else:
@@ -29,13 +27,12 @@ class Backtracking(Algoritmo):
                         self.gera_solucao(filho)
                         return
                     no = filho
-            except IndexError:
-                if no == raiz:
-                    self.gera_solucao()
-                    return
-                else:
-                    self.fechado += 1
-                    self.aberto -= 1
-                    temp = no.pai
-                    temp.filhos.remove(no)
-                    no = temp
+            elif no == raiz:
+                self.gera_solucao()
+                return
+            else:
+                self.num_nos_visitados += 1
+                self.num_nos_expandidos -= 1
+                temp = no.pai
+                temp.filhos.remove(no)
+                no = temp

@@ -11,14 +11,10 @@ class Algoritmo(ABC):
         self.profundidade = 0
         self.custo_solucao = 0
 
-        self.num_nos_expandidos = 0
+        self.num_nos_expandidos = 1
         self.num_nos_visitados = 0
 
         self.fator_ramificacao = 0
-
-        self.aberto = 1
-        self.fechado = 0
-        self.ramificado = 0
 
     @property
     @abstractmethod
@@ -57,12 +53,8 @@ class Algoritmo(ABC):
         return False
 
     def gera_filho(self, no):
-        self.aberto += 1
-        self.ramificado += 1
-
-        if not no.expandido:
-            no.expandido = True
-            self.num_nos_expandidos += 1
+        self.num_nos_expandidos += 1
+        no.expandido = True
 
         filho = No(no.cidade.vizinhos[no.cont_filho])
         filho.pai = no

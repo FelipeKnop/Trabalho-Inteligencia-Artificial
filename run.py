@@ -43,7 +43,7 @@ def cria_grafo(inicio: int, fim: int) -> Grafo:
     # Cria a lista de cidades
     cidades = [Cidade(i) for i in range(quantidade)]
 
-    # Obtém as matriz de distância entre as cidades
+    # Obtém a matriz de distância entre as cidades
     distancias = np.array(
         [
             linhas[i].strip('\n').split(' ')  # strip remove o \n no final da linha e split separa os número por espaços
