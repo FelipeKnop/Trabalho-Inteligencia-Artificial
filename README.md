@@ -10,4 +10,4 @@ Repositório para a implementação do trabalho final da disciplina DCC014 - Int
 - [x] Busca Ordenada
 - [x] Busca Gulosa
 - [x] Busca A*
-- [ ] Busca IDA*
+- [x] Busca IDA*
