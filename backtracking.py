@@ -31,8 +31,6 @@ class Backtracking(Algoritmo):
                 self.gera_solucao()
                 return
             else:
-                self.num_nos_visitados += 1
-                self.num_nos_expandidos -= 1
                 temp = no.pai
                 temp.filhos.remove(no)
                 no = temp

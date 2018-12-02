@@ -7,7 +7,7 @@ Repositório para a implementação do trabalho final da disciplina DCC014 - Int
 - [x] Backtracking
 - [x] Busca em Largura
 - [ ] Busca em Profundidade (Limitada)
-- [ ] Busca Ordenada
-- [ ] Busca Gulosa
+- [x] Busca Ordenada
+- [x] Busca Gulosa
 - [ ] Busca A*
 - [ ] Busca IDA*
