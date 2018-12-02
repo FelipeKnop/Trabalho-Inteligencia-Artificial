@@ -4,8 +4,8 @@ Repositório para a implementação do trabalho final da disciplina DCC014 - Int
 
 ## Algoritmos de busca
 
-- [ ] Backtracking
-- [ ] Busca em Largura
+- [x] Backtracking
+- [x] Busca em Largura
 - [ ] Busca em Profundidade (Limitada)
 - [ ] Busca Ordenada
 - [ ] Busca Gulosa

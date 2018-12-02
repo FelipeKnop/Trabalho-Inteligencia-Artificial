@@ -63,3 +63,25 @@ class Algoritmo(ABC):
         no.cont_filho += 1
 
         return filho
+
+    def gera_filhos(self, no, fechados):
+        no.expandido = True
+        fechados[no.cidade.id] = True
+
+        self.num_nos_expandidos -= 1
+        self.num_nos_visitados += 1
+
+        while len(no.cidade.vizinhos) > no.cont_filho:
+            proximo = no.cidade.vizinhos[no.cont_filho].id
+
+            if not self.confere_ancestral(no, proximo) and not fechados[proximo]:
+                self.num_nos_expandidos += 1
+
+                filho = No(no.cidade.vizinhos[no.cont_filho])
+                filho.pai = no
+                filho.valor = no.valor + self.grafo.distancias[no.cidade.id][filho.cidade.id]
+                no.filhos.append(filho)
+
+            no.cont_filho += 1
+
+        no.cont_filho = 0
