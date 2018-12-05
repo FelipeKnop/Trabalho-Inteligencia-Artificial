@@ -118,7 +118,7 @@ def executa(inicio: int, fim: int, algoritmos: list) -> None:
             print(f'\nNúmero total de nós expandidos: {algoritmo.num_nos_expandidos}\n')
             print(f'Número total de nós visitados: {algoritmo.num_nos_visitados}\n')
 
-            print(f'\nValor médio do fator de ramificação: {algoritmo.fator_ramificacao}\n')
+            print(f'\nValor médio do fator de ramificação: {algoritmo.fator_ramificacao: .3f}\n')
 
         print(f'\nTempo total de execução: {end_time - start_time:.2f} segundos.\n')
         print('--------------------------------------------')
