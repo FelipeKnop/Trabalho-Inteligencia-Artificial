@@ -24,7 +24,7 @@ class Backtracking(Algoritmo):
                 else:
                     filho = self.gera_filho(no)
                     if filho.cidade.id == self.grafo.id_fim:
-                        self.gera_solucao(filho)
+                        self.gera_solucao(filho, 0, -1)
                         return
                     no = filho
             elif no == raiz:

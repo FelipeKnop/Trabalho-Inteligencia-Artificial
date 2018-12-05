@@ -33,7 +33,7 @@ class BuscaLargura(Algoritmo):
             aux = fila.get()
             aux.pai.cont_filho += 1
             if aux.cidade.id == self.grafo.id_fim:
-                self.gera_solucao(aux)
+                self.gera_solucao(aux, fila.qsize(), fechados.count(True))
                 return
 
             if not aux.expandido:

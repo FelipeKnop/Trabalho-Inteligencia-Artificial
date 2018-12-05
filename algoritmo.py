@@ -30,7 +30,7 @@ class Algoritmo(ABC):
         Método abstrato com a implementação do algoritmo.
         """
 
-    def gera_solucao(self, no=None):
+    def gera_solucao(self, no=None, n_abertos=0, n_fechados=0):
         if no is None:
             self.caminho = None
             return
@@ -43,6 +43,17 @@ class Algoritmo(ABC):
 
         if no.pai is None:
             self.caminho.insert(0, str(no.cidade.id))
+
+        if n_fechados == -1:
+            n_fechados = len(self.caminho)
+
+        self.num_nos_expandidos = n_abertos + n_fechados
+        self.num_nos_visitados = n_fechados
+
+        if self.num_nos_visitados == 0:
+            self.fator_ramificacao = 0
+        else:
+            self.fator_ramificacao = self.num_nos_expandidos / self.num_nos_visitados
 
     def confere_ancestral(self, no, id):
         while no.pai is not None:

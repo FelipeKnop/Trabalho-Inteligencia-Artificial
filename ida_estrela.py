@@ -30,7 +30,7 @@ class BuscaIDAEstrela(Algoritmo):
                     if filho.valor + self.grafo.heuristicas[filho.cidade.id][self.grafo.id_fim] > patamar + 0.00001:
                         descartados.append(filho)
                     elif filho.cidade.id == self.grafo.id_fim:
-                        self.gera_solucao(filho)
+                        self.gera_solucao(filho, 0, -1)
                         return
                     else:
                         no = filho

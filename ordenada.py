@@ -43,7 +43,7 @@ class BuscaOrdenada(Algoritmo):
                     menor = abertos[i]
 
             if menor.cidade.id == self.grafo.id_fim:
-                self.gera_solucao(menor)
+                self.gera_solucao(menor, len(abertos), fechados.count(True))
                 return
             else:
                 no = menor

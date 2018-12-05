@@ -33,7 +33,7 @@ class BuscaProfundidade(Algoritmo):
             aux = pilha.get()
             aux.pai.cont_filho += 1
             if aux.cidade.id == self.grafo.id_fim:
-                self.gera_solucao(aux)
+                self.gera_solucao(aux, pilha.qsize(), fechados.count(True))
                 return
 
             if not aux.expandido:
